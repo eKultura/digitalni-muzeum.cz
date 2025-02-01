@@ -263,6 +263,9 @@ class Louder3dModel {
             const animate = () => {
                 requestAnimationFrame(animate);
                 controls.update();
+                if (this.vrControlPanel) {
+                    this.vrControlPanel.update();
+                }
                 if (autoRotate && this.objectTest) {
                     this.objectTest.rotation.z += 0.01;
                 }

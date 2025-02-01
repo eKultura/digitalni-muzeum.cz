@@ -110,6 +110,7 @@ class Louder3dModelVR extends Louder3dModel {
     }
 
     async renderModel() {
+        super.renderModel();
        // VR Controllers setup
 const controller1 = renderer.xr.getController(0);
 const controller2 = renderer.xr.getController(1);
