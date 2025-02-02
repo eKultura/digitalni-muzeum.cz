@@ -166,7 +166,7 @@ class Louder3dModelVR extends Louder3dModel {
         );
         scene.add(light);
         scene.add(new THREE.AmbientLight(0x404040));
-        this.vrControlPanel = new VRControlPanel(scene, camera, this.objectTest);
+
         // Load model
         try {
             const materials = await this.loadMaterials();
