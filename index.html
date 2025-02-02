@@ -11,7 +11,6 @@
     <script src="https://cdn.jsdelivr.net/npm/three@0.130.1/examples/js/loaders/STLLoader.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fflate@0.8.2/umd/index.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/three@0.130.1/examples/js/loaders/MTLLoader.js"></script>
-<script src="path/to/three/examples/jsm/webxr/XRControllerModelFactory.js"></script>
 
     <style>
         body {
@@ -91,16 +90,10 @@
 <body>
     <script src="3dmodelv2.js"></script>
     <script src="3dModelVR.Js"></script>
+
     <div class="button-container">
-        <p >lebka</p>
-        <button onclick="renderModels('#FFFFFF', 'models/Loarre.fbx')">Červený model</button>
-        <button onclick="renderModels('#00FF00', 'models/Loarre.fbx')">Zelený model</button>
-        <button onclick="renderModels('#0000FF', 'models/12140_Skull_v3_L2.obj',true)">Modrý model</button>
-    </div>
-    <div class="button-container">
-        <button onclick="renderModels('#FFFFFF', 'models/WineCup.stl')">Červený model</button>
-        <button onclick="renderModels('#00FF00', 'models/WineCup.stl')">Zelený model</button>
-        <button onclick="renderModels('#0000FF', 'models/WineCup.stl')">Modrý model</button>
+       
+       
     </div>
             <div id="3dModelScreen" style="height: 500px; width: 500px;">
 
@@ -154,5 +147,6 @@
             }
         }
     </script>
+     <script>renderModels('#FFFFFF', 'models/WineCup.stl')</script>
 </body>
 </html>

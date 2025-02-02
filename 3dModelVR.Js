@@ -152,6 +152,8 @@ class Louder3dModelVR extends Louder3dModel {
             vrButton.textContent = 'VR Not Supported';
             vrButton.disabled = true;
             container.appendChild(vrButton);
+            super.renderModel();
+            return;
         }
 
         // Lighting
@@ -179,9 +181,6 @@ class Louder3dModelVR extends Louder3dModel {
             const grip1 = renderer.xr.getControllerGrip(0);
             const grip2 = renderer.xr.getControllerGrip(1);
 
-            // Add controller models
-           // grip1.add(controllerModelFactory.createControllerModel(grip1));
-           // grip2.add(controllerModelFactory.createControllerModel(grip2));
 
             scene.add(controller1);
             scene.add(controller2);
