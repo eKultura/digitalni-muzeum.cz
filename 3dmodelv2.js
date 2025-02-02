@@ -200,7 +200,7 @@ class Louder3dModel {
                         reject(new Error('Unsupported file format'));
                         return;
                 }
-
+                this.vrControlPanel = new VRControlPanel(scene, camera, this.objectTest);
                 loader.load(
                     this.objectName, 
                     (object) => {
@@ -261,6 +261,9 @@ class Louder3dModel {
 
             // Animation
             const animate = () => {
+                if (this.vrControlPanel) {
+                    this.vrControlPanel.update();
+                }
                 requestAnimationFrame(animate);
                 controls.update();
                 if (this.vrControlPanel) {
