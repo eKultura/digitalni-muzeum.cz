@@ -1,11 +1,8 @@
-//import { XRControllerModelFactory } from 'three/examples/jsm/webxr/XRControllerModelFactory.js';
 class Louder3dModelVR extends Louder3dModel {
-   
     constructor(options = {}) {
         super(options);
         this.vrSession = null;
         this.vrSupported = false;
-        this.grabbedObject = null;
     }
 
     async checkVRSupport() {
@@ -21,6 +18,7 @@ class Louder3dModelVR extends Louder3dModel {
         return false;
     }
 
+    // Přidáváme metodu pro načítání materiálů
     loadMaterials() {
         return new Promise((resolve, reject) => {
             if (!this.textures || this.nonTexture) {
@@ -46,6 +44,7 @@ class Louder3dModelVR extends Louder3dModel {
         });
     }
 
+    // Přidáváme metodu pro načítání modelů
     loadModel(scene, materials) {
         return new Promise((resolve, reject) => {
             let loader;
@@ -81,9 +80,9 @@ class Louder3dModelVR extends Louder3dModel {
 
                     this.objectTest = object;
                     object.position.set(
-                        this.modelPosition.x,
-                        this.modelPosition.y,
-                        this.modelPosition.z
+                        this.modelPosition.x-10, 
+                        this.modelPosition.y-20, //+20 normalni, 
+                        this.modelPosition.z-50 //-50 normalni, +50 nahoru
                     );
                     object.rotation.set(
                         this.modelRotation.x,
@@ -91,9 +90,9 @@ class Louder3dModelVR extends Louder3dModel {
                         this.modelRotation.z
                     );
                     object.scale.set(
-                        this.modelScale.x,
-                        this.modelScale.y,
-                        this.modelScale.z
+                        this.modelScale.x * 10,
+                        this.modelScale.y * 10,
+                        this.modelScale.z * 10
                     );
 
                     scene.add(object);
@@ -122,13 +121,17 @@ class Louder3dModelVR extends Louder3dModel {
             this.cameraNearPlane,
             this.cameraFarPlane
         );
-        camera.position.set(0, 1.6, 3); // Standard VR eye height and distance
+        camera.position.set(
+            this.cameraPosition.x+1,
+            this.cameraPosition.y+10,
+            this.cameraPosition.z+20
+        );
 
         // Set up WebXR-compatible renderer
         const renderer = new THREE.WebGLRenderer({ antialias: true });
         renderer.setSize(container.clientWidth, container.clientHeight);
         renderer.setClearColor(this.backcolor, 1);
-        renderer.setPixelRatio(window.devicePixelRatio);
+        renderer.setPixelRatio(this.pixelRatio);
         renderer.xr.enabled = true;
         container.appendChild(renderer.domElement);
 
@@ -138,11 +141,11 @@ class Louder3dModelVR extends Louder3dModel {
         vrButton.style.bottom = '20px';
         vrButton.style.right = '20px';
         vrButton.style.padding = '12px 24px';
-        vrButton.style.backgroundColor = this.vrSupported ? '#4CAF50' : '#cccccc';
+        vrButton.style.backgroundColor = '#4CAF50';
         vrButton.style.color = 'white';
         vrButton.style.border = 'none';
         vrButton.style.borderRadius = '4px';
-        vrButton.style.cursor = this.vrSupported ? 'pointer' : 'default';
+        vrButton.style.cursor = 'pointer';
         
         if (await this.checkVRSupport()) {
             vrButton.textContent = 'Enter VR';
@@ -151,9 +154,8 @@ class Louder3dModelVR extends Louder3dModel {
         } else {
             vrButton.textContent = 'VR Not Supported';
             vrButton.disabled = true;
+            vrButton.style.backgroundColor = '#cccccc';
             container.appendChild(vrButton);
-            super.renderModel();
-            return;
         }
 
         // Lighting
@@ -174,59 +176,43 @@ class Louder3dModelVR extends Louder3dModel {
             const materials = await this.loadMaterials();
             await this.loadModel(scene, materials);
 
-            // VR Controllers setup with grip models
-            //const controllerModelFactory = new XRControllerModelFactory();
+            // VR Controllers setup
             const controller1 = renderer.xr.getController(0);
             const controller2 = renderer.xr.getController(1);
-            const grip1 = renderer.xr.getControllerGrip(0);
-            const grip2 = renderer.xr.getControllerGrip(1);
-
-
             scene.add(controller1);
             scene.add(controller2);
+
+            // Controller grip setup
+            const grip1 = renderer.xr.getControllerGrip(0);
+            const grip2 = renderer.xr.getControllerGrip(1);
+            
+            grip1.addEventListener('connected', (event) => {
+                const mesh = event.data.targetRaySpace.getObjectByName('mesh');
+                if (mesh) {
+                    grip1.add(mesh);
+                }
+            });
+            
+            grip2.addEventListener('connected', (event) => {
+              const mesh = event.data.targetRaySpace.getObjectByName('mesh');
+                if (mesh) {
+                    grip2.add(mesh);
+                }
+            });
+            
+            
             scene.add(grip1);
             scene.add(grip2);
 
-            // Object grabbing logic
-            let grabbedObject = null;
-            const grabDistance = 0.5; // Distance for grabbing
-
-            // Helper function to check if object is near controller
-            const isNearObject = (controller) => {
-                if (!this.objectTest) return false;
-                const distance = controller.position.distanceTo(this.objectTest.position);
-                return distance < grabDistance;
-            };
-
-            // Grab start event
-            controller1.addEventListener('selectstart', () => {
-                if (isNearObject(controller1)) {
-                    grabbedObject = this.objectTest;
-                }
-            });
-
-            // Grab end event
-            controller1.addEventListener('selectend', () => {
-                grabbedObject = null;
-            });
+            // Controller event listeners
+            controller1.addEventListener('selectstart', () => this.onControllerSelect());
+            controller1.addEventListener('selectend', () => this.onControllerSelectEnd());
 
             // Animation loop
             renderer.setAnimationLoop((timestamp, frame) => {
-                // Update grabbed object position
-                if (grabbedObject && frame) {
-                    const referenceSpace = renderer.xr.getReferenceSpace();
-                    const controllerPose = frame.getPose(controller1.inputSource.gripSpace, referenceSpace);
-                    
-                    if (controllerPose) {
-                        grabbedObject.position.copy(controllerPose.transform.position);
-                    }
-                }
-
-                // Auto-rotate when not in VR
                 if (this.autoRotate && this.objectTest && !this.vrSession) {
                     this.objectTest.rotation.y += 0.01;
                 }
-
                 renderer.render(scene, camera);
             });
 
@@ -239,13 +225,8 @@ class Louder3dModelVR extends Louder3dModel {
     async enterVR(renderer) {
         try {
             this.vrSession = await navigator.xr.requestSession('immersive-vr', {
-                requiredFeatures: ['local-floor']
+                optionalFeatures: ['local-floor', 'bounded-floor']
             });
-
-            // Set reference space
-            const refSpace = await this.vrSession.requestReferenceSpace('local-floor');
-            renderer.xr.setReferenceSpace(refSpace);
-            
             renderer.xr.setSession(this.vrSession);
             
             this.vrSession.addEventListener('end', () => {
@@ -254,6 +235,20 @@ class Louder3dModelVR extends Louder3dModel {
 
         } catch (err) {
             console.error('Error entering VR:', err);
+        }
+    }
+
+    onControllerSelect() {
+        // Handle controller select event (e.g., trigger press)
+        if (this.objectTest) {
+            this.objectTest.scale.multiplyScalar(1.1);
+        }
+    }
+
+    onControllerSelectEnd() {
+        // Handle controller select end event
+        if (this.objectTest) {
+            this.objectTest.scale.multiplyScalar(1/1.1);
         }
     }
 }

@@ -89,7 +89,7 @@
 </head>
 <body>
     <script src="3dmodelv2.js"></script>
-    <script src="3dModelVR.Js"></script>
+    <script src="3dModelVR.js"></script>
 
     <div class="button-container">
        
@@ -106,7 +106,6 @@
     </div>
 
     <script>
-        renderModels('#FFFFFF', 'models/WineCup.stl');
         function renderModels(color, modelPath,autootexture) {
             const obj = new Louder3dModelVR( {
      backcolor: color,  
@@ -146,7 +145,8 @@
                 closeModal();
             }
         }
+        
+        renderModels('#FFFFFF', 'models/WineCup.stl');
     </script>
-     <script>renderModels('#FFFFFF', 'models/WineCup.stl')</script>
 </body>
 </html>
