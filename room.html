@@ -20,6 +20,15 @@
         import { VirtualRoomWithModels } from './VirtualRoom.js';
         
         const virtualRoom = new VirtualRoomWithModels();
+        virtualRoom.addModel({
+            id: 'wineCup',
+            path: './models/WineCup.stl',  // Ujistěte se, že máte tento soubor ve složce models
+            position: { x: 2, y: 1.5, z: -3 },
+            rotation: { x: -Math.PI / 2, y: 0, z: Math.PI / 6 },
+            scale: { x: 1.0, y: 1.0, z: 1.0 },
+            modelColor: '#c0c0c0',
+            autoRotate: true,
+        });
     </script>
 </body>
 </html>
