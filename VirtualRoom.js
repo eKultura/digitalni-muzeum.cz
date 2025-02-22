@@ -55,17 +55,37 @@ function init() {
   // Raycaster slouží k vyhodnocení, kam kontroler "ukazuje" – potřebný pro teleportaci
   raycaster = new THREE.Raycaster();
 
-  // --- Nastavení VR kontrolerů ---
-  // Získáme kontrolery a přidáme posluchače událostí pro stisk a uvolnění tlačítka
-  controller1 = renderer.xr.getController(0);
-  controller1.addEventListener('selectstart', onSelectStart);
-  controller1.addEventListener('selectend', onSelectEnd);
-  scene.add(controller1);
+// --- Nastavení VR kontrolerů ---
+// Vytvoření geometrie a materiálu pro kostky
+const controllerGeometry = new THREE.BoxGeometry(0.1, 0.1, 0.1);
+const controllerMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 });
 
-  controller2 = renderer.xr.getController(1);
-  controller2.addEventListener('selectstart', onSelectStart);
-  controller2.addEventListener('selectend', onSelectEnd);
-  scene.add(controller2);
+// První kontroler
+controller1 = renderer.xr.getController(0);
+controller1.addEventListener('selectstart', onSelectStart);
+controller1.addEventListener('selectend', onSelectEnd);
+
+// Vytvoření kostky pro první kontroler
+const controller1Mesh = new THREE.Mesh(controllerGeometry, controllerMaterial);
+controller1.add(controller1Mesh); // Přidání kostky ke kontroleru
+cameraRig.add(controller1);
+
+// Druhý kontroler
+controller2 = renderer.xr.getController(1);
+controller2.addEventListener('selectstart', onSelectStart);
+controller2.addEventListener('selectend', onSelectEnd);
+
+// Vytvoření kostky pro druhý kontroler
+const controller2Mesh = new THREE.Mesh(controllerGeometry, controllerMaterial);
+controller2.add(controller2Mesh); // Přidání kostky ke kontroleru
+cameraRig.add(controller2);
+
+// Volitelně můžete přidat XR Grip pro přesnější sledování fyzické pozice kontroleru
+const controllerGrip1 = renderer.xr.getControllerGrip(0);
+camera.add(controllerGrip1);
+
+const controllerGrip2 = renderer.xr.getControllerGrip(1);
+camera.add(controllerGrip2);
 
   // --- Přidání vizuálního paprsku (volitelné) ---
   // Tento paprsek pomáhá uživateli vidět, kam kontroler ukazuje.
