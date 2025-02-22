@@ -20,9 +20,23 @@
         import { VirtualRoomWithModels } from './VirtualRoom.js';
         
         const virtualRoom = new VirtualRoomWithModels();
+
+
+        virtualRoom.addModel({
+    id: 'door',
+    path: './models/door.stl',
+    position: {x: -2, y: 1.5, z: -2 },
+    rotation: { x: 0, y: 0, z: 0 },
+    scale: { x: 0.10, y: 0.10, z: 0.10 },
+    color: 0x8B4513,
+    onInteract: (model) => {
+        model.rotation.y += Math.PI / 2;
+        console.log('Dveře se otevírají!');
+    }
+        });
         virtualRoom.addModel({
             id: 'wineCup',
-            path: './models/WineCup.stl',  // Ujistěte se, že máte tento soubor ve složce models
+            path: './models/WineCup.stl',  
             position: { x: 2, y: 1.5, z: -3 },
             rotation: { x: -Math.PI / 2, y: 0, z: Math.PI / 6 },
             scale: { x: 1.0, y: 1.0, z: 1.0 },

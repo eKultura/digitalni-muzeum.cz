@@ -2,6 +2,7 @@
 import * as THREE from 'three';
 import { VRButton } from 'three/addons/webxr/VRButton.js';
 import { STLLoader } from 'three/addons/loaders/STLLoader.js';
+import { OBJLoader } from 'three/addons/loaders/OBJLoader.js';
 
 export class VirtualRoomWithModels {
     constructor() {
@@ -15,6 +16,11 @@ export class VirtualRoomWithModels {
         this.raycaster = null;
         this.teleportableObjects = [];
         this.models = new Map(); // Mapa pro uchování všech modelů
+        this.modelCallbacks = new Map(); // Nová mapa pro callback funkce
+
+        // Inicializace loaderů
+        this.stlLoader = new STLLoader();
+        this.objLoader = new OBJLoader();
 
         this.init();
     }
@@ -159,16 +165,30 @@ export class VirtualRoomWithModels {
     }
 
     onSelectEnd(event) {
-        const controller = event.target;
-        controller.userData.isSelecting = false;
+      const controller = event.target;
+      controller.userData.isSelecting = false;
 
-        const intersections = this.getIntersections(controller);
-        if (intersections.length > 0) {
-            const intersection = intersections[0];
-            this.cameraRig.position.x = intersection.point.x;
-            this.cameraRig.position.z = intersection.point.z;
-        }
-    }
+      const intersections = this.getIntersections(controller);
+      if (intersections.length > 0) {
+          const intersection = intersections[0];
+          const object = intersection.object;
+
+          // Projdeme všechny modely a zjistíme, jestli máme callback
+          for (let [id, model] of this.models) {
+              if (model === object && this.modelCallbacks.has(id)) {
+                  // Zavoláme příslušný callback
+                  this.modelCallbacks.get(id)(model);
+                  return;
+              }
+          }
+
+          // Pokud nebyl nalezen callback, použijeme původní teleportaci
+          if (this.teleportableObjects.includes(object)) {
+              this.cameraRig.position.x = intersection.point.x;
+              this.cameraRig.position.z = intersection.point.z;
+          }
+      }
+  }
 
     getIntersections(controller) {
         const tempMatrix = new THREE.Matrix4();
@@ -194,49 +214,83 @@ export class VirtualRoomWithModels {
 
     // Metoda pro přidání nového modelu
     async addModel(modelConfig) {
-        const {
-            id, // Unikátní ID modelu
-            path, // Cesta k STL souboru
-            position = { x: 0, y: 1.5, z: -3 },
-            rotation = { x: -Math.PI / 2, y: 0, z: Math.PI / 6 },
-            scale = { x: 1.0, y: 1.0, z: 1.0 },
-            color = 0xc0c0c0
-        } = modelConfig;
+      const {
+          id,
+          path,
+          type = 'stl', // Nový parametr pro typ souboru ('stl' nebo 'obj')
+          position = { x: 0, y: 1.5, z: -3 },
+          rotation = { x: -Math.PI / 2, y: 0, z: Math.PI / 6 },
+          scale = { x: 1.0, y: 1.0, z: 1.0 },
+          color = 0xc0c0c0,
+          onInteract = null
+      } = modelConfig;
 
-        try {
-            const loader = new STLLoader();
-            const geometry = await new Promise((resolve, reject) => {
-                loader.load(path, resolve, undefined, reject);
-            });
+      try {
+          let model;
 
-            const material = new THREE.MeshStandardMaterial({
-                color: color,
-                metalness: 0.5,
-                roughness: 0.5
-            });
+          if (type.toLowerCase() === 'obj') {
+              // Načtení OBJ modelu
+              model = await new Promise((resolve, reject) => {
+                  this.objLoader.load(path, 
+                      (object) => {
+                          // OBJ loader vrací Group, aplikujeme materiál na všechny meshe
+                          object.traverse((child) => {
+                              if (child instanceof THREE.Mesh) {
+                                  child.material = new THREE.MeshStandardMaterial({
+                                      color: color,
+                                      metalness: 0.5,
+                                      roughness: 0.5
+                                  });
+                              }
+                          });
+                          resolve(object);
+                      },
+                      undefined,
+                      reject
+                  );
+              });
+          } else {
+              // Načtení STL modelu (původní funkcionalita)
+              const geometry = await new Promise((resolve, reject) => {
+                  this.stlLoader.load(path, resolve, undefined, reject);
+              });
 
-            const model = new THREE.Mesh(geometry, material);
+              const material = new THREE.MeshStandardMaterial({
+                  color: color,
+                  metalness: 0.5,
+                  roughness: 0.5
+              });
 
-            // Centrování modelu
-            geometry.computeBoundingBox();
-            const center = geometry.boundingBox.getCenter(new THREE.Vector3());
-            model.position.sub(center);
+              model = new THREE.Mesh(geometry, material);
 
-            // Nastavení pozice, rotace a měřítka
-            model.position.set(position.x, position.y, position.z);
-            model.rotation.set(rotation.x, rotation.y, rotation.z);
-            model.scale.set(scale.x, scale.y, scale.z);
+              // Centrování STL modelu
+              geometry.computeBoundingBox();
+              const center = geometry.boundingBox.getCenter(new THREE.Vector3());
+              model.position.sub(center);
+          }
 
-            // Přidání modelu do scény a do mapy modelů
-            this.scene.add(model);
-            this.models.set(id, model);
+          // Nastavení pozice, rotace a měřítka
+          model.position.set(position.x, position.y, position.z);
+          model.rotation.set(rotation.x, rotation.y, rotation.z);
+          model.scale.set(scale.x, scale.y, scale.z);
 
-            return model;
-        } catch (error) {
-            console.error(`Chyba při načítání modelu ${id}:`, error);
-            return null;
-        }
-    }
+          // Přidání modelu do scény a do mapy modelů
+          this.scene.add(model);
+          this.models.set(id, model);
+
+          // Uložení callback funkce, pokud byla poskytnuta
+          if (onInteract) {
+              this.modelCallbacks.set(id, onInteract);
+              // Přidání do objektů, které lze zasáhnout raycastem
+              this.teleportableObjects.push(model);
+          }
+
+          return model;
+      } catch (error) {
+          console.error(`Chyba při načítání modelu ${id}:`, error);
+          return null;
+      }
+  }
 
     // Metoda pro odstranění modelu
     removeModel(modelId) {
