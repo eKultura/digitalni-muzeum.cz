@@ -1,17 +1,25 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset='utf-8'>
-    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>Page Title</title>
-    <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
-    <script type="module">
-        import './VirtualRoom.js';  // Importuj svůj skript jako modul
-    </script>
-    
+    <title>Virtual Room</title>
+    <style>
+        body { margin: 0; }
+        canvas { display: block; }
+    </style>
 </head>
 <body>
-    
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://unpkg.com/three@0.128.0/build/three.module.js",
+            "three/addons/": "https://unpkg.com/three@0.128.0/examples/jsm/"
+        }
+    }
+    </script>
+    <script type="module">
+        import { VirtualRoomWithModels } from './VirtualRoom.js';
+        
+        const virtualRoom = new VirtualRoomWithModels();
+    </script>
 </body>
 </html>

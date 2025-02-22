@@ -1,8 +1,9 @@
-import * as THREE from 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.module.min.js';
-import { VRButton } from 'https://cdn.jsdelivr.net/npm/three@0.128/examples/jsm/webxr/VRButton.js';
-import { STLLoader } from 'https://cdn.jsdelivr.net/npm/three@0.128/examples/jsm/loaders/STLLoader.js';
+// VirtualRoom.js
+import * as THREE from 'three';
+import { VRButton } from 'three/addons/webxr/VRButton.js';
+import { STLLoader } from 'three/addons/loaders/STLLoader.js';
 
-class VirtualRoomWithModels {
+export class VirtualRoomWithModels {
     constructor() {
         // Základní nastavení
         this.scene = null;
@@ -52,85 +53,6 @@ class VirtualRoomWithModels {
 
         // Spuštění animační smyčky
         this.animate();
-    }
-
-    // Metoda pro přidání nového modelu
-    async addModel(modelConfig) {
-        const {
-            id, // Unikátní ID modelu
-            path, // Cesta k STL souboru
-            position = { x: 0, y: 1.5, z: -3 },
-            rotation = { x: -Math.PI / 2, y: 0, z: Math.PI / 6 },
-            scale = { x: 1.0, y: 1.0, z: 1.0 },
-            color = 0xc0c0c0
-        } = modelConfig;
-
-        try {
-            const loader = new STLLoader();
-            const geometry = await new Promise((resolve, reject) => {
-                loader.load(path, resolve, undefined, reject);
-            });
-
-            const material = new THREE.MeshStandardMaterial({
-                color: color,
-                metalness: 0.5,
-                roughness: 0.5
-            });
-
-            const model = new THREE.Mesh(geometry, material);
-
-            // Centrování modelu
-            geometry.computeBoundingBox();
-            const center = geometry.boundingBox.getCenter(new THREE.Vector3());
-            model.position.sub(center);
-
-            // Nastavení pozice, rotace a měřítka
-            model.position.set(position.x, position.y, position.z);
-            model.rotation.set(rotation.x, rotation.y, rotation.z);
-            model.scale.set(scale.x, scale.y, scale.z);
-
-            // Přidání modelu do scény a do mapy modelů
-            this.scene.add(model);
-            this.models.set(id, model);
-
-            return model;
-        } catch (error) {
-            console.error(`Chyba při načítání modelu ${id}:`, error);
-            return null;
-        }
-    }
-
-    // Metoda pro odstranění modelu
-    removeModel(modelId) {
-        const model = this.models.get(modelId);
-        if (model) {
-            this.scene.remove(model);
-            this.models.delete(modelId);
-        }
-    }
-
-    // Metoda pro aktualizaci pozice modelu
-    updateModelPosition(modelId, position) {
-        const model = this.models.get(modelId);
-        if (model) {
-            model.position.set(position.x, position.y, position.z);
-        }
-    }
-
-    // Metoda pro aktualizaci rotace modelu
-    updateModelRotation(modelId, rotation) {
-        const model = this.models.get(modelId);
-        if (model) {
-            model.rotation.set(rotation.x, rotation.y, rotation.z);
-        }
-    }
-
-    // Metoda pro aktualizaci měřítka modelu
-    updateModelScale(modelId, scale) {
-        const model = this.models.get(modelId);
-        if (model) {
-            model.scale.set(scale.x, scale.y, scale.z);
-        }
     }
 
     createRoom() {
@@ -269,25 +191,83 @@ class VirtualRoomWithModels {
             this.renderer.render(this.scene, this.camera);
         });
     }
+
+    // Metoda pro přidání nového modelu
+    async addModel(modelConfig) {
+        const {
+            id, // Unikátní ID modelu
+            path, // Cesta k STL souboru
+            position = { x: 0, y: 1.5, z: -3 },
+            rotation = { x: -Math.PI / 2, y: 0, z: Math.PI / 6 },
+            scale = { x: 1.0, y: 1.0, z: 1.0 },
+            color = 0xc0c0c0
+        } = modelConfig;
+
+        try {
+            const loader = new STLLoader();
+            const geometry = await new Promise((resolve, reject) => {
+                loader.load(path, resolve, undefined, reject);
+            });
+
+            const material = new THREE.MeshStandardMaterial({
+                color: color,
+                metalness: 0.5,
+                roughness: 0.5
+            });
+
+            const model = new THREE.Mesh(geometry, material);
+
+            // Centrování modelu
+            geometry.computeBoundingBox();
+            const center = geometry.boundingBox.getCenter(new THREE.Vector3());
+            model.position.sub(center);
+
+            // Nastavení pozice, rotace a měřítka
+            model.position.set(position.x, position.y, position.z);
+            model.rotation.set(rotation.x, rotation.y, rotation.z);
+            model.scale.set(scale.x, scale.y, scale.z);
+
+            // Přidání modelu do scény a do mapy modelů
+            this.scene.add(model);
+            this.models.set(id, model);
+
+            return model;
+        } catch (error) {
+            console.error(`Chyba při načítání modelu ${id}:`, error);
+            return null;
+        }
+    }
+
+    // Metoda pro odstranění modelu
+    removeModel(modelId) {
+        const model = this.models.get(modelId);
+        if (model) {
+            this.scene.remove(model);
+            this.models.delete(modelId);
+        }
+    }
+
+    // Metoda pro aktualizaci pozice modelu
+    updateModelPosition(modelId, position) {
+        const model = this.models.get(modelId);
+        if (model) {
+            model.position.set(position.x, position.y, position.z);
+        }
+    }
+
+    // Metoda pro aktualizaci rotace modelu
+    updateModelRotation(modelId, rotation) {
+        const model = this.models.get(modelId);
+        if (model) {
+            model.rotation.set(rotation.x, rotation.y, rotation.z);
+        }
+    }
+
+    // Metoda pro aktualizaci měřítka modelu
+    updateModelScale(modelId, scale) {
+        const model = this.models.get(modelId);
+        if (model) {
+            model.scale.set(scale.x, scale.y, scale.z);
+        }
+    }
 }
-
-// Příklad použití:
-const virtualRoom = new VirtualRoomWithModels();
-
-// Přidání několika modelů
-virtualRoom.addModel({
-    id: 'model1',
-    path: 'models/WineCup.stl',
-    position: { x: 2, y: 1.5, z: -3 },
-    rotation: { x: -Math.PI / 2, y: 0, z: Math.PI / 6 },
-    scale: { x: 1.0, y: 1.0, z: 1.0 },
-    color: 0xff0000
-});
-
-
-// Později můžete modely upravovat
-virtualRoom.updateModelPosition('model1', { x: 3, y: 1.5, z: -4 });
-virtualRoom.updateModelRotation('model2', { x: 0, y: Math.PI, z: 0 });
-
-// Nebo odstranit
-// virtualRoom.removeModel('model1');
