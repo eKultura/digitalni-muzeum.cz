@@ -1,209 +1,293 @@
-// Importy – ujisti se, že máš ve svém projektu správně nastavené moduly Three.js a VRButton.
-// Pokud nepoužíváš moduly, můžeš využít globální proměnné načtené přes <script> tagy.
-//import * as THREE from 'three';
 import * as THREE from 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.module.min.js';
 import { VRButton } from 'https://cdn.jsdelivr.net/npm/three@0.128/examples/jsm/webxr/VRButton.js';
+import { STLLoader } from 'https://cdn.jsdelivr.net/npm/three@0.128/examples/jsm/loaders/STLLoader.js';
 
+class VirtualRoomWithModels {
+    constructor() {
+        // Základní nastavení
+        this.scene = null;
+        this.camera = null;
+        this.renderer = null;
+        this.cameraRig = null;
+        this.controller1 = null;
+        this.controller2 = null;
+        this.raycaster = null;
+        this.teleportableObjects = [];
+        this.models = new Map(); // Mapa pro uchování všech modelů
 
-let scene, camera, renderer, cameraRig;
-let controller1, controller2;
-let raycaster;
-const teleportableObjects = []; // Zde budou objekty, na které lze teleportovat (např. podlaha)
+        this.init();
+    }
 
-init();
-animate();
+    init() {
+        // Inicializace scény
+        this.scene = new THREE.Scene();
+        this.scene.background = new THREE.Color(0xaaaaaa);
 
-function init() {
-  // --- Vytvoření scény a nastavení pozadí ---
-  scene = new THREE.Scene();
-  scene.background = new THREE.Color(0xaaaaaa);
+        // Camera rig
+        this.cameraRig = new THREE.Group();
+        this.scene.add(this.cameraRig);
 
-  // --- Vytvoření "rigu" (skupiny) pro kameru ---
-  // Díky této skupině můžeme snadno měnit polohu celé sady (kamera + případně další objekty)
-  cameraRig = new THREE.Group();
-  scene.add(cameraRig);
+        // Kamera
+        this.camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 1000);
+        this.camera.position.set(0, 1.6, 3);
+        this.cameraRig.add(this.camera);
 
-  // --- Vytvoření kamery ---
-  // Kamera simuluje pozici očí uživatele – zde se nastavuje výchozí výška (1.6 m) a počáteční pozice
-  camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 1000);
-  camera.position.set(0, 1.6, 3);
-  cameraRig.add(camera);
+        // Renderer
+        this.renderer = new THREE.WebGLRenderer({ antialias: true });
+        this.renderer.setPixelRatio(window.devicePixelRatio);
+        this.renderer.setSize(window.innerWidth, window.innerHeight);
+        this.renderer.xr.enabled = true;
+        document.body.appendChild(this.renderer.domElement);
+        document.body.appendChild(VRButton.createButton(this.renderer));
 
-  // --- Vytvoření rendereru ---
-  renderer = new THREE.WebGLRenderer({ antialias: true });
-  renderer.setPixelRatio(window.devicePixelRatio);
-  renderer.setSize(window.innerWidth, window.innerHeight);
-  renderer.xr.enabled = true; // Povolení VR režimu
-  document.body.appendChild(renderer.domElement);
+        // Vytvoření místnosti a osvětlení
+        this.createRoom();
+        this.setupLighting();
+        
+        // Nastavení VR kontrolerů
+        this.setupControllers();
 
-  // --- Přidání VR tlačítka ---
-  // Toto tlačítko umožní vstoupit do VR režimu, pokud to prohlížeč podporuje.
-  document.body.appendChild(VRButton.createButton(renderer));
+        // Event listenery
+        window.addEventListener('resize', () => this.onWindowResize(), false);
 
-  // --- Vytvoření místnosti ---
-  createRoom();
+        // Spuštění animační smyčky
+        this.animate();
+    }
 
-  // --- Přidání základního osvětlení ---
-  const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
-  scene.add(ambientLight);
+    // Metoda pro přidání nového modelu
+    async addModel(modelConfig) {
+        const {
+            id, // Unikátní ID modelu
+            path, // Cesta k STL souboru
+            position = { x: 0, y: 1.5, z: -3 },
+            rotation = { x: -Math.PI / 2, y: 0, z: Math.PI / 6 },
+            scale = { x: 1.0, y: 1.0, z: 1.0 },
+            color = 0xc0c0c0
+        } = modelConfig;
 
-  const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
-  directionalLight.position.set(0, 4, 4);
-  scene.add(directionalLight);
+        try {
+            const loader = new STLLoader();
+            const geometry = await new Promise((resolve, reject) => {
+                loader.load(path, resolve, undefined, reject);
+            });
 
-  // --- Inicializace raycasteru ---
-  // Raycaster slouží k vyhodnocení, kam kontroler "ukazuje" – potřebný pro teleportaci
-  raycaster = new THREE.Raycaster();
+            const material = new THREE.MeshStandardMaterial({
+                color: color,
+                metalness: 0.5,
+                roughness: 0.5
+            });
 
-// --- Nastavení VR kontrolerů ---
-// Vytvoření geometrie a materiálu pro kostky
-const controllerGeometry = new THREE.BoxGeometry(0.1, 0.1, 0.1);
-const controllerMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+            const model = new THREE.Mesh(geometry, material);
 
-// První kontroler
-controller1 = renderer.xr.getController(0);
-controller1.addEventListener('selectstart', onSelectStart);
-controller1.addEventListener('selectend', onSelectEnd);
+            // Centrování modelu
+            geometry.computeBoundingBox();
+            const center = geometry.boundingBox.getCenter(new THREE.Vector3());
+            model.position.sub(center);
 
-// Vytvoření kostky pro první kontroler
-const controller1Mesh = new THREE.Mesh(controllerGeometry, controllerMaterial);
-controller1.add(controller1Mesh); // Přidání kostky ke kontroleru
-cameraRig.add(controller1);
+            // Nastavení pozice, rotace a měřítka
+            model.position.set(position.x, position.y, position.z);
+            model.rotation.set(rotation.x, rotation.y, rotation.z);
+            model.scale.set(scale.x, scale.y, scale.z);
 
-// Druhý kontroler
-controller2 = renderer.xr.getController(1);
-controller2.addEventListener('selectstart', onSelectStart);
-controller2.addEventListener('selectend', onSelectEnd);
+            // Přidání modelu do scény a do mapy modelů
+            this.scene.add(model);
+            this.models.set(id, model);
 
-// Vytvoření kostky pro druhý kontroler
-const controller2Mesh = new THREE.Mesh(controllerGeometry, controllerMaterial);
-controller2.add(controller2Mesh); // Přidání kostky ke kontroleru
-cameraRig.add(controller2);
+            return model;
+        } catch (error) {
+            console.error(`Chyba při načítání modelu ${id}:`, error);
+            return null;
+        }
+    }
 
-// Volitelně můžete přidat XR Grip pro přesnější sledování fyzické pozice kontroleru
-const controllerGrip1 = renderer.xr.getControllerGrip(0);
-camera.add(controllerGrip1);
+    // Metoda pro odstranění modelu
+    removeModel(modelId) {
+        const model = this.models.get(modelId);
+        if (model) {
+            this.scene.remove(model);
+            this.models.delete(modelId);
+        }
+    }
 
-const controllerGrip2 = renderer.xr.getControllerGrip(1);
-camera.add(controllerGrip2);
+    // Metoda pro aktualizaci pozice modelu
+    updateModelPosition(modelId, position) {
+        const model = this.models.get(modelId);
+        if (model) {
+            model.position.set(position.x, position.y, position.z);
+        }
+    }
 
-  // --- Přidání vizuálního paprsku (volitelné) ---
-  // Tento paprsek pomáhá uživateli vidět, kam kontroler ukazuje.
-  const geometry = new THREE.BufferGeometry().setFromPoints([
-    new THREE.Vector3(0, 0, 0),
-    new THREE.Vector3(0, 0, -1)
-  ]);
-  const line = new THREE.Line(geometry);
-  line.name = 'ray';
-  line.scale.z = 5; // Délka paprsku
-  controller1.add(line.clone());
-  controller2.add(line.clone());
+    // Metoda pro aktualizaci rotace modelu
+    updateModelRotation(modelId, rotation) {
+        const model = this.models.get(modelId);
+        if (model) {
+            model.rotation.set(rotation.x, rotation.y, rotation.z);
+        }
+    }
 
-  // --- Přizpůsobení velikosti okna ---
-  window.addEventListener('resize', onWindowResize, false);
+    // Metoda pro aktualizaci měřítka modelu
+    updateModelScale(modelId, scale) {
+        const model = this.models.get(modelId);
+        if (model) {
+            model.scale.set(scale.x, scale.y, scale.z);
+        }
+    }
+
+    createRoom() {
+        const room = new THREE.Group();
+
+        // Podlaha
+        const floorGeometry = new THREE.PlaneGeometry(10, 10);
+        const floorMaterial = new THREE.MeshStandardMaterial({ color: 0x808080 });
+        const floor = new THREE.Mesh(floorGeometry, floorMaterial);
+        floor.rotation.x = -Math.PI / 2;
+        floor.receiveShadow = true;
+        room.add(floor);
+        this.teleportableObjects.push(floor);
+
+        // Stěny
+        const wallMaterial = new THREE.MeshStandardMaterial({ color: 0x999999 });
+        const wallHeight = 3;
+        const wallWidth = 10;
+
+        // Vytvoření stěn
+        [
+            { pos: [0, wallHeight / 2, -5], rot: [0, 0, 0] },
+            { pos: [0, wallHeight / 2, 5], rot: [0, Math.PI, 0] },
+            { pos: [-5, wallHeight / 2, 0], rot: [0, Math.PI / 2, 0] },
+            { pos: [5, wallHeight / 2, 0], rot: [0, -Math.PI / 2, 0] }
+        ].forEach(wall => {
+            const wallGeometry = new THREE.PlaneGeometry(wallWidth, wallHeight);
+            const wallMesh = new THREE.Mesh(wallGeometry, wallMaterial);
+            wallMesh.position.set(...wall.pos);
+            wallMesh.rotation.set(...wall.rot);
+            room.add(wallMesh);
+        });
+
+        // Strop
+        const ceiling = new THREE.Mesh(
+            new THREE.PlaneGeometry(10, 10),
+            new THREE.MeshStandardMaterial({ color: 0xcccccc })
+        );
+        ceiling.rotation.x = Math.PI / 2;
+        ceiling.position.y = wallHeight;
+        room.add(ceiling);
+
+        this.scene.add(room);
+    }
+
+    setupLighting() {
+        // Ambientní světlo
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+        this.scene.add(ambientLight);
+
+        // Hlavní směrové světlo
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+        directionalLight.position.set(0, 4, 4);
+        this.scene.add(directionalLight);
+
+        // Doplňkové světlo
+        const fillLight = new THREE.DirectionalLight(0xffffff, 0.7);
+        fillLight.position.set(-5, 5, -5);
+        this.scene.add(fillLight);
+    }
+
+    setupControllers() {
+        // Inicializace raycasteru
+        this.raycaster = new THREE.Raycaster();
+
+        // Geometrie pro kontrolery
+        const controllerGeometry = new THREE.BoxGeometry(0.1, 0.1, 0.1);
+        const controllerMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+
+        // První kontroler
+        this.controller1 = this.renderer.xr.getController(0);
+        this.controller1.addEventListener('selectstart', (event) => this.onSelectStart(event));
+        this.controller1.addEventListener('selectend', (event) => this.onSelectEnd(event));
+        
+        const controller1Mesh = new THREE.Mesh(controllerGeometry, controllerMaterial);
+        this.controller1.add(controller1Mesh);
+        this.cameraRig.add(this.controller1);
+
+        // Druhý kontroler
+        this.controller2 = this.renderer.xr.getController(1);
+        this.controller2.addEventListener('selectstart', (event) => this.onSelectStart(event));
+        this.controller2.addEventListener('selectend', (event) => this.onSelectEnd(event));
+        
+        const controller2Mesh = new THREE.Mesh(controllerGeometry, controllerMaterial);
+        this.controller2.add(controller2Mesh);
+        this.cameraRig.add(this.controller2);
+
+        // Paprsky pro vizualizaci
+        const geometry = new THREE.BufferGeometry().setFromPoints([
+            new THREE.Vector3(0, 0, 0),
+            new THREE.Vector3(0, 0, -1)
+        ]);
+        
+        const line = new THREE.Line(geometry);
+        line.name = 'ray';
+        line.scale.z = 5;
+        
+        this.controller1.add(line.clone());
+        this.controller2.add(line.clone());
+    }
+
+    onSelectStart(event) {
+        event.target.userData.isSelecting = true;
+    }
+
+    onSelectEnd(event) {
+        const controller = event.target;
+        controller.userData.isSelecting = false;
+
+        const intersections = this.getIntersections(controller);
+        if (intersections.length > 0) {
+            const intersection = intersections[0];
+            this.cameraRig.position.x = intersection.point.x;
+            this.cameraRig.position.z = intersection.point.z;
+        }
+    }
+
+    getIntersections(controller) {
+        const tempMatrix = new THREE.Matrix4();
+        tempMatrix.identity().extractRotation(controller.matrixWorld);
+
+        this.raycaster.ray.origin.setFromMatrixPosition(controller.matrixWorld);
+        this.raycaster.ray.direction.set(0, 0, -1).applyMatrix4(tempMatrix);
+
+        return this.raycaster.intersectObjects(this.teleportableObjects, false);
+    }
+
+    onWindowResize() {
+        this.camera.aspect = window.innerWidth / window.innerHeight;
+        this.camera.updateProjectionMatrix();
+        this.renderer.setSize(window.innerWidth, window.innerHeight);
+    }
+
+    animate() {
+        this.renderer.setAnimationLoop(() => {
+            this.renderer.render(this.scene, this.camera);
+        });
+    }
 }
 
-function createRoom() {
-  // Funkce vytvoří místnost se podlahou, stěnami a stropem.
-  const room = new THREE.Group();
+// Příklad použití:
+const virtualRoom = new VirtualRoomWithModels();
 
-  // Vytvoření podlahy – používáme rovinnou geometrii (PlaneGeometry)
-  const floorGeometry = new THREE.PlaneGeometry(10, 10);
-  const floorMaterial = new THREE.MeshStandardMaterial({ color: 0x808080 });
-  const floor = new THREE.Mesh(floorGeometry, floorMaterial);
-  floor.rotation.x = -Math.PI / 2; // Otočíme podlahu, aby byla vodorovná
-  floor.receiveShadow = true;
-  room.add(floor);
-  teleportableObjects.push(floor); // Podlaha je vhodná cíl pro teleportaci
+// Přidání několika modelů
+virtualRoom.addModel({
+    id: 'model1',
+    path: 'models/WineCup.stl',
+    position: { x: 2, y: 1.5, z: -3 },
+    rotation: { x: -Math.PI / 2, y: 0, z: Math.PI / 6 },
+    scale: { x: 1.0, y: 1.0, z: 1.0 },
+    color: 0xff0000
+});
 
-  // Vytvoření stěn – zde použijeme čtyři roviny
-  const wallMaterial = new THREE.MeshStandardMaterial({ color: 0x999999 });
-  const wallHeight = 3;
-  const wallWidth = 10;
 
-  // Zadní stěna
-  const backWallGeometry = new THREE.PlaneGeometry(wallWidth, wallHeight);
-  const backWall = new THREE.Mesh(backWallGeometry, wallMaterial);
-  backWall.position.set(0, wallHeight / 2, -5);
-  room.add(backWall);
+// Později můžete modely upravovat
+virtualRoom.updateModelPosition('model1', { x: 3, y: 1.5, z: -4 });
+virtualRoom.updateModelRotation('model2', { x: 0, y: Math.PI, z: 0 });
 
-  // Přední stěna
-  const frontWall = new THREE.Mesh(backWallGeometry, wallMaterial);
-  frontWall.rotation.y = Math.PI;
-  frontWall.position.set(0, wallHeight / 2, 5);
-  room.add(frontWall);
-
-  // Levá stěna
-  const sideWallGeometry = new THREE.PlaneGeometry(10, wallHeight);
-  const leftWall = new THREE.Mesh(sideWallGeometry, wallMaterial);
-  leftWall.rotation.y = Math.PI / 2;
-  leftWall.position.set(-5, wallHeight / 2, 0);
-  room.add(leftWall);
-
-  // Pravá stěna
-  const rightWall = new THREE.Mesh(sideWallGeometry, wallMaterial);
-  rightWall.rotation.y = -Math.PI / 2;
-  rightWall.position.set(5, wallHeight / 2, 0);
-  room.add(rightWall);
-
-  // Strop – další rovina umístěná nad místností
-  const ceilingGeometry = new THREE.PlaneGeometry(10, 10);
-  const ceilingMaterial = new THREE.MeshStandardMaterial({ color: 0xcccccc });
-  const ceiling = new THREE.Mesh(ceilingGeometry, ceilingMaterial);
-  ceiling.rotation.x = Math.PI / 2; // Otočíme strop, aby byl vodorovný nahoře
-  ceiling.position.y = wallHeight;
-  room.add(ceiling);
-
-  // Přidání místnosti do scény
-  scene.add(room);
-}
-
-function onSelectStart(event) {
-  // Když uživatel stiskne tlačítko na kontroleru, můžeme například zobrazit paprsek nebo jinou vizuální indikaci.
-  event.target.userData.isSelecting = true;
-}
-
-function onSelectEnd(event) {
-  // Po uvolnění tlačítka provedeme teleportaci.
-  const controller = event.target;
-  controller.userData.isSelecting = false;
-
-  // Zjistíme, kam kontroler "ukazuje" pomocí raycasteru
-  const intersections = getIntersections(controller);
-  if (intersections.length > 0) {
-    const intersection = intersections[0];
-
-    // Teleportace: aktualizujeme pozici celého "rigu" (zachová se výška kamery)
-    cameraRig.position.x = intersection.point.x;
-    cameraRig.position.z = intersection.point.z;
-  }
-}
-
-function getIntersections(controller) {
-  // Vytvoříme paprsek (ray) z pozice a orientace kontroleru, abychom zjistili, kde paprsek zasáhne teleportovatelný objekt.
-  const tempMatrix = new THREE.Matrix4();
-  tempMatrix.identity().extractRotation(controller.matrixWorld);
-
-  raycaster.ray.origin.setFromMatrixPosition(controller.matrixWorld);
-  raycaster.ray.direction.set(0, 0, -1).applyMatrix4(tempMatrix);
-
-  // Vracíme pole průsečíků s objekty v teleportableObjects
-  return raycaster.intersectObjects(teleportableObjects, false);
-}
-
-function onWindowResize() {
-  // Přizpůsobení kamery a rendereru při změně velikosti okna
-  camera.aspect = window.innerWidth / window.innerHeight;
-  camera.updateProjectionMatrix();
-  renderer.setSize(window.innerWidth, window.innerHeight);
-}
-
-function animate() {
-  // Funkce pro animaci – renderer se automaticky vykresluje, což podporuje VR režim
-  renderer.setAnimationLoop(render);
-}
-
-function render() {
-  // Vykreslíme scénu z pohledu kamery
-  renderer.render(scene, camera);
-}
+// Nebo odstranit
+// virtualRoom.removeModel('model1');
