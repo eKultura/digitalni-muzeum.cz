@@ -1,8 +1,7 @@
 {
-  "repository": "https://github.com/theringsofsaturn/3D-art-gallery",
+  "repository": "https://github.com/eKultura/digitalni-muzeum.cz",
   "author": {
-    "name": "Emilian Kasemi",
-    "email": "emiliankasemi@gmail.com"
+    "name": "Laura Baluchova by Emilian Kasemi tutorial"    
   },
   "license": "Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International",
   "dependencies": {
