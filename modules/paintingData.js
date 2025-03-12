@@ -57,7 +57,7 @@ kroniky Čech), vydané v Praze roku 1853, kde je imaginární „hrad“ označ
           link: 'https://www.databazeknih.cz/citaty/kosmas-1181',
         }},
   // Back Wall  
-  {imgSrc: `artworks/5.jpg`, // `i + 1` is the painting number. We add 1 to the index because the index starts at 0 but we want the painting numbers to start at 1.
+  {imgSrc: `artworks/5.jpg`, 
     width: 5, // width of the painting
     height: 4, // height of the painting
     position: { x: -15 + 10 * 0, y: 2, z: 19.5 }, // position of the painting
@@ -70,7 +70,7 @@ kroniky Čech), vydané v Praze roku 1853, kde je imaginární „hrad“ označ
       year: `Rok ???`,
       link: 'https://www.databazeknih.cz/citaty/kosmas-1181',
     }},
-    {imgSrc: `artworks/6.jpg`, // `i + 1` is the painting number. We add 1 to the index because the index starts at 0 but we want the painting numbers to start at 1.
+    {imgSrc: `artworks/6.jpg`, 
       width: 5, // width of the painting
       height: 4, // height of the painting
       position: { x: -15 + 10 * 1, y: 2, z: 19.5 }, // position of the painting
@@ -83,7 +83,7 @@ kroniky Čech), vydané v Praze roku 1853, kde je imaginární „hrad“ označ
         year: `Rok ???`,
         link: 'https://commons.wikimedia.org/wiki/File:Josef_Mathauser_-_Praotec_%C4%8Cech_na_ho%C5%99e_%C5%98%C3%ADp.jpg',
       }},
-      {imgSrc: `artworks/7.jpg`, // `i + 1` is the painting number. We add 1 to the index because the index starts at 0 but we want the painting numbers to start at 1.
+      {imgSrc: `artworks/7.jpg`,
         width: 5, // width of the painting
         height: 4, // height of the painting
         position: { x: -15 + 10 * 2, y: 2, z: 19.5 }, // position of the painting
@@ -92,11 +92,11 @@ kroniky Čech), vydané v Praze roku 1853, kde je imaginární „hrad“ označ
           // info about the painting
           title: ` Přemysl Oráč, kterého přicházejí povolat na trůn`,
           artist: 'Umělá inteligence',
-          description: `???`,
+          description: `Vygeneroval ChatGPT`,
           year: `Rok 2025`,
-          link: 'https://www.moraviamagna.cz/kroniky/k_ko__uv.htm',
+          link: '',
         }},
-        {imgSrc: `artworks/8.jpg`, // `i + 1` is the painting number. We add 1 to the index because the index starts at 0 but we want the painting numbers to start at 1.
+        {imgSrc: `artworks/8.jpg`, 
           width: 3, // width of the painting
           height: 4, // height of the painting
           position: { x: -15 + 10 * 3, y: 2, z: 19.5 }, // position of the painting
@@ -112,7 +112,7 @@ kroniky Čech), vydané v Praze roku 1853, kde je imaginární „hrad“ označ
               
       
   // Left Wall  
-  {imgSrc: `artworks/9.jpg`, // `i + 1` is the painting number. We add 1 to the index because the index starts at 0 but we want the painting numbers to start at 1.
+  {imgSrc: `artworks/9.jpg`, 
     width: 5, // width of the painting
     height: 4, // height of the painting
     position: { x: -19.5, y: 2, z: -15 + 10 * 0 }, // position of the painting
@@ -125,7 +125,7 @@ kroniky Čech), vydané v Praze roku 1853, kde je imaginární „hrad“ označ
       year: `Rok ???`,
       link: 'https://www.moraviamagna.cz/kroniky/k_ko3_16.htm',
     }},
-    {imgSrc: `artworks/10.jpg`, // `i + 1` is the painting number. We add 1 to the index because the index starts at 0 but we want the painting numbers to start at 1.
+    {imgSrc: `artworks/10.jpg`, 
       width: 2.75, // width of the painting
       height: 4, // height of the painting
       position: { x: -19.5, y: 2, z: -15 + 10 * 1}, // position of the painting
@@ -138,7 +138,7 @@ kroniky Čech), vydané v Praze roku 1853, kde je imaginární „hrad“ označ
         year: `Rok akvizice 1967`,
         link: 'https://sbirky.moravska-galerie.cz/dilo/CZE:MG.B_8553',
       }},
-      {imgSrc: `artworks/11.jpg`, // `i + 1` is the painting number. We add 1 to the index because the index starts at 0 but we want the painting numbers to start at 1.
+      {imgSrc: `artworks/11.jpg`, 
         width: 3, // width of the painting
         height: 4, // height of the painting
         position: { x: -19.5, y: 2, z: -15 + 10 * 2 }, // position of the painting
@@ -146,12 +146,12 @@ kroniky Čech), vydané v Praze roku 1853, kde je imaginární „hrad“ označ
         info: {
           // info about the painting
           title: `Kosmova Kronika česká: ukázka`,
-          artist: 'Neznamy',
+          artist: 'Neznámý',
           description: `Kosmova Kronika česká". Praha: Melantrich, 1929. Výtisk čís. 47/50 na Zandersu. Menší fol. 203, (1) str. Z latiny přel. K. Hrdina. Graf. úprava, iniciály, dřevoryty a vazba K. Svolinský. Pův. celokož. tlačená vazba.`,
           year: `Rok 1929`,
           link: 'https://www.antikvariatkrenek.com/en/books/12684-kosmova-kronika-ceska-melantrich-1929-drevoryty-svolinsky-1929.html',
         }},
-        {imgSrc: `artworks/12.jpg`, // `i + 1` is the painting number. We add 1 to the index because the index starts at 0 but we want the painting numbers to start at 1.
+        {imgSrc: `artworks/12.jpg`, 
           width: 5, // width of the painting
           height: 4, // height of the painting
           position: { x: -19.5, y: 2, z: -15 + 10 * 3 }, // position of the painting
@@ -159,26 +159,26 @@ kroniky Čech), vydané v Praze roku 1853, kde je imaginární „hrad“ označ
           info: {
             // info about the painting
             title: `Přemysl Oráč`,
-            artist: 'Neznamy',
+            artist: 'Neznámý',
             description: `Přemysl Oráč na fresce v rotundě sv. Kateřiny ve Znojmě`,
-            year: `11. storočie`,
+            year: `11. století`,
             link: 'https://commons.wikimedia.org/wiki/File:Premysl_Orac.jpg',
           }},
   // Right Wall  
-  {imgSrc: `artworks/13.jpg`, // `i + 1` is the painting number. We add 1 to the index because the index starts at 0 but we want the painting numbers to start at 1.
-    width: 6, // width of the painting
+  {imgSrc: `artworks/13.jpg`, 
+    width: 2, // width of the painting
     height: 4, // height of the painting
     position: { x: 19.5, y: 2, z: -15 + 10 * 0 }, // position of the painting
     rotationY: - Math.PI / 2, // rotation of the painting
     info: {
       // info about the painting
       title: `Kosmas: portrét`,
-      artist: 'Neznamy',
-      description: `Český kronikář a děkan pražské kapituly Kosmas (cca 1045-1125) - obraz na stěně v Mladotově domě na Pražském hradě.`,
-      year: `Rok ???`,
-      link: 'https://www.moraviamagna.cz/kroniky/k_ko__uv.htm',
+      artist: 'Kleinhard Johann (ilustrátor) a Johann Georg Balzer (rytec)',
+      description: `Město původu rytiny je Praha.`,
+      year: `Rok 1772`,
+      link: 'https://www.portraitindex.de/documents/obj/33201456',
     }},
-    {imgSrc: `artworks/14.jpg`, // `i + 1` is the painting number. We add 1 to the index because the index starts at 0 but we want the painting numbers to start at 1.
+    {imgSrc: `artworks/14.jpg`, 
       width: 3, // width of the painting
       height: 4, // height of the painting
       position: { x: 19.5, y: 2, z: -15 + 10 * 1 }, // position of the painting
@@ -191,31 +191,27 @@ kroniky Čech), vydané v Praze roku 1853, kde je imaginární „hrad“ označ
         year: `Rok 1929`,
         link: 'https://www.antikvariatkrenek.com/en/books/12684-kosmova-kronika-ceska-melantrich-1929-drevoryty-svolinsky-1929.html',
       }},
-      {imgSrc: `artworks/15.jpg`, // `i + 1` is the painting number. We add 1 to the index because the index starts at 0 but we want the painting numbers to start at 1.
+      {imgSrc: `artworks/15.jpg`, 
         width: 4, // width of the painting
         height: 4, // height of the painting
         position: { x: 19.5, y: 2, z: -15 + 10 * 2 }, // position of the painting
         rotationY: - Math.PI / 2, // rotation of the painting
         info: {
           // info about the painting
-          title: `Kolorovaný přetisk z Illustrierte Chronik von Böhmen (Ilustrované
-      kroniky Čech)`,
-          artist: 'Neznamy',
-          description: `Lech a Čech na obrázku dodatečně přidaném do Budyšínského rukopisu Kosmovy kroniky
-      ve 14. století. Kolorovaný přetisk z Illustrierte Chronik von Böhmen (Ilustrované
-      kroniky Čech), vydané v Praze roku 1853, kde je imaginární „hrad“ označen jako
-      „praobraz pražského hradu sv. Václava“ („Das Urbild der prager St. Venzelsburg“)`,
-          year: `Rok 1853`,
-          link: 'https://www.moraviamagna.cz/kroniky/k_ko__uv.htm',
+          title: `Kosmas píše kroniku`,
+          artist: 'Umělá inteligence',
+          description: `Vygeneroval ChatGPT`,
+          year: `Rok 2025`,
+          link: '',
         }},
-        {imgSrc: `artworks/16.jpg`, // `i + 1` is the painting number. We add 1 to the index because the index starts at 0 but we want the painting numbers to start at 1.
+        {imgSrc: `artworks/16.jpg`, 
           width: 5, // width of the painting
           height: 4, // height of the painting
           position: { x: 19.5, y: 2, z: -15 + 10 * 3 }, // position of the painting
           rotationY: - Math.PI / 2, // rotation of the painting
           info: {
             // info about the painting
-            title: `Kosmův výrok`,
+            title: `Citát Kosmu`,
             artist: 'Kosmas',
             description: `???`,
             year: `Rok ???`,
