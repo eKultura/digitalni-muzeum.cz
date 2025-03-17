@@ -17,7 +17,7 @@ kroniky Čech), vydané v Praze roku 1853, kde je imaginární „hrad“ označ
     year: `Rok 1853`,
     link: 'https://www.moraviamagna.cz/kroniky/k_ko__uv.htm',
   }},
-  {imgSrc: `artworks/2.jpg`, 
+  {imgSrc: `artworks/2.webp`, 
     width: 3, // width of the painting
     height: 4, // height of the painting
     position: { x: -15 + 10 * 1, y: 2, z: -19.5 }, // position of the painting
@@ -30,7 +30,7 @@ kroniky Čech), vydané v Praze roku 1853, kde je imaginární „hrad“ označ
       year: `1. třetina 13. století`,
       link: 'https://www.manuscriptorium.com/apps/index.php?direct=record&pid=AIPDIG-NMP___VIII_F_69___2NZEPX1-cs#search',
     }},
-    {imgSrc: `artworks/3.jpg`, 
+    {imgSrc: `artworks/3.webp`, 
       width: 3, // width of the painting
       height: 4, // height of the painting
       position: { x: -15 + 10 * 2, y: 2, z: -19.5 }, // position of the painting
@@ -43,7 +43,7 @@ kroniky Čech), vydané v Praze roku 1853, kde je imaginární „hrad“ označ
         year: `14. století`,
         link: 'https://commons.wikimedia.org/wiki/File:Kosmas.jpg',
       }},
-      {imgSrc: `artworks/4.jpg`,
+      {imgSrc: `artworks/4.webp`,
         width: 5, // width of the painting
         height: 4, // height of the painting
         position: { x: -15 + 10 * 3, y: 2, z: -19.5 }, // position of the painting
@@ -57,7 +57,7 @@ kroniky Čech), vydané v Praze roku 1853, kde je imaginární „hrad“ označ
           link: 'https://www.databazeknih.cz/citaty/kosmas-1181',
         }},
   // Back Wall  
-  {imgSrc: `artworks/5.jpg`, 
+  {imgSrc: `artworks/5.webp`, 
     width: 5, // width of the painting
     height: 4, // height of the painting
     position: { x: -15 + 10 * 0, y: 2, z: 19.5 }, // position of the painting
@@ -70,7 +70,7 @@ kroniky Čech), vydané v Praze roku 1853, kde je imaginární „hrad“ označ
       year: `Rok ???`,
       link: 'https://www.databazeknih.cz/citaty/kosmas-1181',
     }},
-    {imgSrc: `artworks/6.jpg`, 
+    {imgSrc: `artworks/6.webp`, 
       width: 5, // width of the painting
       height: 4, // height of the painting
       position: { x: -15 + 10 * 1, y: 2, z: 19.5 }, // position of the painting
@@ -83,7 +83,7 @@ kroniky Čech), vydané v Praze roku 1853, kde je imaginární „hrad“ označ
         year: `Rok ???`,
         link: 'https://commons.wikimedia.org/wiki/File:Josef_Mathauser_-_Praotec_%C4%8Cech_na_ho%C5%99e_%C5%98%C3%ADp.jpg',
       }},
-      {imgSrc: `artworks/7.jpg`,
+      {imgSrc: `artworks/7.webp`,
         width: 5, // width of the painting
         height: 4, // height of the painting
         position: { x: -15 + 10 * 2, y: 2, z: 19.5 }, // position of the painting
@@ -96,7 +96,7 @@ kroniky Čech), vydané v Praze roku 1853, kde je imaginární „hrad“ označ
           year: `Rok 2025`,
           link: '',
         }},
-        {imgSrc: `artworks/8.jpg`, 
+        {imgSrc: `artworks/8.webp`, 
           width: 3, // width of the painting
           height: 4, // height of the painting
           position: { x: -15 + 10 * 3, y: 2, z: 19.5 }, // position of the painting
@@ -112,7 +112,7 @@ kroniky Čech), vydané v Praze roku 1853, kde je imaginární „hrad“ označ
               
       
   // Left Wall  
-  {imgSrc: `artworks/9.jpg`, 
+  {imgSrc: `artworks/9.webp`, 
     width: 5, // width of the painting
     height: 4, // height of the painting
     position: { x: -19.5, y: 2, z: -15 + 10 * 0 }, // position of the painting
@@ -125,7 +125,7 @@ kroniky Čech), vydané v Praze roku 1853, kde je imaginární „hrad“ označ
       year: `Rok ???`,
       link: 'https://www.moraviamagna.cz/kroniky/k_ko3_16.htm',
     }},
-    {imgSrc: `artworks/10.jpg`, 
+    {imgSrc: `artworks/10.webp`, 
       width: 2.75, // width of the painting
       height: 4, // height of the painting
       position: { x: -19.5, y: 2, z: -15 + 10 * 1}, // position of the painting
@@ -138,7 +138,7 @@ kroniky Čech), vydané v Praze roku 1853, kde je imaginární „hrad“ označ
         year: `Rok akvizice 1967`,
         link: 'https://sbirky.moravska-galerie.cz/dilo/CZE:MG.B_8553',
       }},
-      {imgSrc: `artworks/11.jpg`, 
+      {imgSrc: `artworks/11.webp`, 
         width: 3, // width of the painting
         height: 4, // height of the painting
         position: { x: -19.5, y: 2, z: -15 + 10 * 2 }, // position of the painting
@@ -151,7 +151,7 @@ kroniky Čech), vydané v Praze roku 1853, kde je imaginární „hrad“ označ
           year: `Rok 1929`,
           link: 'https://www.antikvariatkrenek.com/en/books/12684-kosmova-kronika-ceska-melantrich-1929-drevoryty-svolinsky-1929.html',
         }},
-        {imgSrc: `artworks/12.jpg`, 
+        {imgSrc: `artworks/12.webp`, 
           width: 5, // width of the painting
           height: 4, // height of the painting
           position: { x: -19.5, y: 2, z: -15 + 10 * 3 }, // position of the painting
@@ -165,7 +165,7 @@ kroniky Čech), vydané v Praze roku 1853, kde je imaginární „hrad“ označ
             link: 'https://commons.wikimedia.org/wiki/File:Premysl_Orac.jpg',
           }},
   // Right Wall  
-  {imgSrc: `artworks/13.jpg`, 
+  {imgSrc: `artworks/13.webp`, 
     width: 2, // width of the painting
     height: 4, // height of the painting
     position: { x: 19.5, y: 2, z: -15 + 10 * 0 }, // position of the painting
@@ -178,7 +178,7 @@ kroniky Čech), vydané v Praze roku 1853, kde je imaginární „hrad“ označ
       year: `Rok 1772`,
       link: 'https://www.portraitindex.de/documents/obj/33201456',
     }},
-    {imgSrc: `artworks/14.jpg`, 
+    {imgSrc: `artworks/14.webp`, 
       width: 3, // width of the painting
       height: 4, // height of the painting
       position: { x: 19.5, y: 2, z: -15 + 10 * 1 }, // position of the painting
@@ -191,7 +191,7 @@ kroniky Čech), vydané v Praze roku 1853, kde je imaginární „hrad“ označ
         year: `Rok 1929`,
         link: 'https://www.antikvariatkrenek.com/en/books/12684-kosmova-kronika-ceska-melantrich-1929-drevoryty-svolinsky-1929.html',
       }},
-      {imgSrc: `artworks/15.jpg`, 
+      {imgSrc: `artworks/15.webp`, 
         width: 4, // width of the painting
         height: 4, // height of the painting
         position: { x: 19.5, y: 2, z: -15 + 10 * 2 }, // position of the painting
@@ -204,7 +204,7 @@ kroniky Čech), vydané v Praze roku 1853, kde je imaginární „hrad“ označ
           year: `Rok 2025`,
           link: '',
         }},
-        {imgSrc: `artworks/16.jpg`, 
+        {imgSrc: `artworks/16.webp`, 
           width: 5, // width of the painting
           height: 4, // height of the painting
           position: { x: 19.5, y: 2, z: -15 + 10 * 3 }, // position of the painting
