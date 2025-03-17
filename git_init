@@ -97,3 +97,26 @@ git fetch --all
 # Stažení změn a odstranění referencí na větve, které již neexistují na vzdáleném serveru
 git fetch --prune
 
+
+## ## 4a. Větve s distribučními verzemi
+# I. Vytvoření nové vývojové větve
+git checkout -b feature-branch
+
+# II. Vývoj ve větvi (commit změn)
+# ... (práce na kódu)
+git add .
+git commit -m "Implementace funkcí pro verzi 1"
+
+# III. Vytvoření dist/release tagu pro verzi 1
+git tag v1.0.0
+
+# IV. Pokračování ve vývoji
+# ... (další práce na kódu)
+git add .
+git commit -m "Implementace funkcí pro verzi 2"
+
+# V. Vytvoření dist/release tagu pro verzi 2
+git tag v2.0.0
+
+# VI. Odeslání tagů na server
+git push origin feature-branch --tags
