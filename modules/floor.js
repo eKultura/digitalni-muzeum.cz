@@ -6,16 +6,16 @@ export const setupFloor = (scene) => {
 
   // Load the textures
   const colorTexture = textureLoader.load(
-    "WoodFloor040_4K-JPG/Tiles078_1K-JPG_Color.jpg"
+    "WoodFloor040_4K-JPG/Tiles078_1K-JPG_Color.webp"
   );
   const displacementTexture = textureLoader.load(
-    "WoodFloor040_4K-JPG/Tiles078_1K-JPG_Displacement.jpg"
+    "WoodFloor040_4K-JPG/Tiles078_1K-JPG_Displacement.webp"
   );
   const normalTexture = textureLoader.load(
-    "WoodFloor040_4K-JPG/Tiles078_1K-JPG_NormalGL.jpg"
+    "WoodFloor040_4K-JPG/Tiles078_1K-JPG_NormalGL.webp"
   );
   const roughnessTexture = textureLoader.load(
-    "WoodFloor040_4K-JPG/Tiles078_1K-JPG_Roughness.jpg"
+    "WoodFloor040_4K-JPG/Tiles078_1K-JPG_Roughness.webp"
   );
   // const aoTexture = textureLoader.load(
   //   "WoodFloor040_4K-JPG/WoodFloor040_4K-JPG_AmbientOcclusion.jpg"

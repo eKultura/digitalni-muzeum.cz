@@ -5,10 +5,10 @@ export function createWalls(scene, textureLoader) {
   scene.add(wallGroup);
 
   const normalTexture = textureLoader.load(
-    "leather_white_4k.gltf/textures/leather_white_nor_gl_4k.jpg"
+    "leather_white_4k.gltf/textures/leather_white_nor_gl_4k.webp"
   );
   const roughnessTexture = textureLoader.load(
-    "leather_white_4k.gltf/textures/leather_white_rough_4k.jpg"
+    "leather_white_4k.gltf/textures/leather_white_rough_4k.webp"
   );
 
   normalTexture.wrapS = normalTexture.wrapT = THREE.RepeatWrapping;
