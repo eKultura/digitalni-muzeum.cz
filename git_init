@@ -1,0 +1,122 @@
+#Denní použití
+- nastavit inicializaci, vše z bodu 1. (pouze jednou - poprvé)
+- git fetch origin 
+- git reset --hard origin/main
+
+## ## 1. Inicializace a základní nastavení
+# Inicializace nového Git repozitáře
+git init
+
+# Nastavení jména a emailu (globálně)
+git config --global user.name "Laura"
+git config --global user.email "vas.email@example.com"
+
+# Nastavení bezpečného adresáře 
+git config --global --add safe.directory /var/www/test.digitalni-muzeum.cz
+
+# Přidání vzdáleného repozitáře
+git remote add origin https://github.com/eKultura/digitalni-muzeum.cz.git
+
+
+## ## 1a. Další příkazy ##
+# Stažení vzdáleného repozitáře
+git clone https://github.com/eKultura/digitalni-muzeum.cz.git
+
+# Stažení konkrétní větve
+git clone -b nazev-vetve https://github.com/eKultura/digitalni-muzeum.cz.git
+
+# Aktualizace místního repozitáře
+git pull origin main
+
+# Nastavení místní větve tak, aby sledovala vzdálenou
+git branch --set-upstream-to=origin/main main
+
+## ## 2. Práce se vzdáleným repozitářem
+# Přidání vzdáleného repozitáře
+git remote add origin https://github.com/eKultura/digitalni-muzeum.cz.git
+
+# Stažení vzdáleného repozitáře
+git clone https://github.com/username/repository.git
+
+# Stažení konkrétní větve
+git clone -b nazev-vetve https://github.com/eKultura/digitalni-muzeum.cz.git
+
+# Aktualizace místního repozitáře
+git pull origin main
+
+# Nastavení místní větve tak, aby sledovala vzdálenou
+git branch --set-upstream-to=origin/main main
+
+## ## 3. Běžné operace
+# Přidání souborů do stage
+git add .                   # Přidá všechny soubory
+git add nazev-souboru.txt   # Přidá konkrétní soubor
+
+# Vytvoření commitu
+git commit -m "Popis změn"
+
+# Odeslání změn do vzdáleného repozitáře
+git push origin main
+git push origin main --force (nepoužívat, přepíše vše na vzdáleném repozitáři)
+
+# Zobrazení stavu repozitáře
+git status
+
+# Zobrazení historie commitů
+git log
+
+## ## 4. Práce s větvemi
+# Vytvoření nové větve
+git branch nova-vetev
+
+# Přepnutí na větev
+git checkout nova-vetev
+# nebo novější způsob
+git switch nova-vetev
+
+# Vytvoření a přepnutí na novou větev jedním příkazem
+git checkout -b nova-vetev
+# nebo novější způsob
+git switch -c nova-vetev
+
+# Sloučení větve do aktuální větve
+git merge nazev-vetve
+
+# Smazání větve
+git branch -d nazev-vetve
+
+# Stažení všech změn ze vzdáleného repozitáře bez sloučení
+git fetch origin
+
+# Stažení změn z konkrétní větve
+git fetch origin nazev-vetve
+
+# Stažení změn ze všech vzdálených repozitářů
+git fetch --all
+
+# Stažení změn a odstranění referencí na větve, které již neexistují na vzdáleném serveru
+git fetch --prune
+
+
+## ## 4a. Větve s distribučními verzemi
+# I. Vytvoření nové vývojové větve
+git checkout -b feature-branch
+
+# II. Vývoj ve větvi (commit změn)
+# ... (práce na kódu)
+git add .
+git commit -m "Implementace funkcí pro verzi 1"
+
+# III. Vytvoření dist/release tagu pro verzi 1
+git tag v1.0.0
+
+# IV. Pokračování ve vývoji
+# ... (další práce na kódu)
+git add .
+git commit -m "Implementace funkcí pro verzi 2"
+
+# V. Vytvoření dist/release tagu pro verzi 2
+git tag v2.0.0
+
+# VI. Odeslání tagů na server
+git push origin feature-branch --tags
