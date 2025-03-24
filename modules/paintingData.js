@@ -166,7 +166,7 @@ kroniky Čech), vydané v Praze roku 1853, kde je imaginární „hrad“ označ
           }},
   // Right Wall  
   {imgSrc: `artworks/13.webp`, 
-    width: 2, // width of the painting
+    width: 3, // width of the painting
     height: 4, // height of the painting
     position: { x: 19.5, y: 2, z: -15 + 10 * 0 }, // position of the painting
     rotationY: - Math.PI / 2, // rotation of the painting
