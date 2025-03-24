@@ -3,9 +3,7 @@ import * as THREE from 'three';
 import { paintingData } from './paintingData.js';
 
 export function createPaintings(scene, textureLoader) {
-  console.log("p data", paintingData)
- 
-  let paintings = [];
+   let paintings = [];
 
   paintingData.forEach((data) => {
    

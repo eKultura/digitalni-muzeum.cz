@@ -15,24 +15,24 @@ export const createCeiling = (scene, textureLoader) => {
   const emissionTexture = textureLoader.load(
     "OfficeCeiling005_4K-JPG/OfficeCeiling001_1K-JPG_Emission.webp"
   );
-  const metalnessTexture = textureLoader.load(
-    "OfficeCeiling005_4K-JPG/OfficeCeiling001_1K-JPG_Metalness.webp"
-  );
+  // const metalnessTexture = textureLoader.load(
+  //   "OfficeCeiling005_4K-JPG/OfficeCeiling001_1K-JPG_Metalness.webp"
+  // );
   const normalGLTexture = textureLoader.load(
     "OfficeCeiling005_4K-JPG/OfficeCeiling001_1K-JPG_NormalGL.webp"
   );
-  const roughnessTexture = textureLoader.load(
-    "OfficeCeiling005_4K-JPG/OfficeCeiling001_1K-JPG_Roughness.webp"
-  );
+  // const roughnessTexture = textureLoader.load(
+  //   "OfficeCeiling005_4K-JPG/OfficeCeiling001_1K-JPG_Roughness.webp"
+  // );
 
   // Set texture parameters
   colorTexture.wrapS = colorTexture.wrapT = THREE.RepeatWrapping;
   displacementTexture.wrapS = displacementTexture.wrapT = THREE.RepeatWrapping;
   aoTexture.wrapS = aoTexture.wrapT = THREE.RepeatWrapping;
   emissionTexture.wrapS = emissionTexture.wrapT = THREE.RepeatWrapping;
-  metalnessTexture.wrapS = metalnessTexture.wrapT = THREE.RepeatWrapping;
+  // metalnessTexture.wrapS = metalnessTexture.wrapT = THREE.RepeatWrapping;
   normalGLTexture.wrapS = normalGLTexture.wrapT = THREE.RepeatWrapping;
-  roughnessTexture.wrapS = roughnessTexture.wrapT = THREE.RepeatWrapping;
+  // roughnessTexture.wrapS = roughnessTexture.wrapT = THREE.RepeatWrapping;
 
   const ceilingGeometry = new THREE.PlaneGeometry(45, 40);
   const ceilingMaterial = new THREE.MeshLambertMaterial({
@@ -40,10 +40,10 @@ export const createCeiling = (scene, textureLoader) => {
     displacementMap: displacementTexture,
     aoMap: aoTexture,
     emissiveMap: emissionTexture,
-    metalnessMap: metalnessTexture,
-    normalMap: normalGLTexture,
-    normalMapType: THREE.NormalMap,
-    roughnessMap: roughnessTexture,
+    // metalnessMap: metalnessTexture,
+    // normalMap: normalGLTexture,
+    // normalMapType: THREE.NormalMap,
+    // roughnessMap: roughnessTexture,
     displacementScale: 0.1,
     side: THREE.DoubleSide,
   });

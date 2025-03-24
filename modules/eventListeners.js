@@ -46,13 +46,10 @@ function onKeyDown(event, controls) {
 
   if (event.key === "Escape") {
     // if the "ESC" key is pressed
-    showMenu(); // show the menu
-    console.log("menu shown")
-    showMenuOnUnlock = true;
-    console.log("menu on unlock should be true", showMenuOnUnlock)
+    showMenu(); // show the menu   
+    showMenuOnUnlock = true;    
     controls.unlock(); // unlock the pointer
-    lockPointer = false;
-    console.log('lockpointer should be false', lockPointer)
+    lockPointer = false;    
   }
 
   if (event.key === "p") {
