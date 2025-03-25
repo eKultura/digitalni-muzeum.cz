@@ -1,5 +1,6 @@
 import { keysPressed } from "./movement.js"; // import the keysPressed object
 import { showMenu, hideMenu } from "./menu.js"; // import the showMenu function
+import { startAudio, stopAudio } from "./audioGuide.js";
 
 let lockPointer = true;
 let showMenuOnUnlock = false;
@@ -24,6 +25,9 @@ export const setupEventListeners = (controls, camera, scene) => {
     }
     showMenuOnUnlock = false;
   }); 
+  // Add event listeners for the audio guide buttons
+  document.getElementById("start_audio").addEventListener("click", startAudio);
+  document.getElementById("stop_audio").addEventListener("click", stopAudio);
 };
 
 // toggle the pointer lock
@@ -69,6 +73,15 @@ function onKeyDown(event, controls) {
   if (event.key === " ") {
     // if the "p" key is pressed
     togglePointerLock(controls); // toggle the pointer lock
+  }
+  if (event.key === "g") {
+    // if the "a" key is pressed
+    startAudio(); // start the audio guide
+  }
+
+  if (event.key === "p") {
+    // if the "s" key is pressed
+    stopAudio(); // stop the audio guide
   }
 
   if (event.key === "m") {
