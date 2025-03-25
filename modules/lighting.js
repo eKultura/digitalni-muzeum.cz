@@ -1,17 +1,17 @@
 import * as THREE from "three";
-import { GUI } from "lil-gui";
+// import { GUI } from "lil-gui";
 
 export const setupLighting = (scene, paintings) => {
-  // Initialize GUI
-  const gui = new GUI();
+  // // Initialize GUI
+  // const gui = new GUI();
 
   // Ambient light
   const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
   scene.add(ambientLight);
 
   // GUI for Ambient Light
-  const ambientFolder = gui.addFolder("Ambient Light");
-  ambientFolder.add(ambientLight, "intensity", 0, 2);
+  // const ambientFolder = gui.addFolder("Ambient Light");
+  // ambientFolder.add(ambientLight, "intensity", 0, 2);
 
   function createSpotlight(x, y, z, intensity, targetPosition) {
     const spotlight = new THREE.SpotLight(0xffffff, intensity);
@@ -34,18 +34,18 @@ export const setupLighting = (scene, paintings) => {
     // scene.add(spotlightHelper);
 
     // Create a GUI folder for this spotlight
-    const folder = gui.addFolder(`Spotlight (${x}, ${y}, ${z})`);
-    folder.add(spotlight, "intensity", 0, 4);
-    folder.add(spotlight, "angle", 0, Math.PI / 2).name("Angle");
-    folder.add(spotlight, "penumbra", 0, 1).name("Penumbra");
-    folder.add(spotlight, "decay", 0, 2).name("Decay");
-    folder.add(spotlight, "distance", 0, 100).name("Distance");
-    folder.add(spotlight.position, "x", -50, 50);
-    folder.add(spotlight.position, "y", -50, 50);
-    folder.add(spotlight.position, "z", -50, 50);
-    folder.add(spotlight.target.position, "x", -50, 50);
-    folder.add(spotlight.target.position, "y", -50, 50);
-    folder.add(spotlight.target.position, "z", -50, 50);
+    // const folder = gui.addFolder(`Spotlight (${x}, ${y}, ${z})`);
+    // folder.add(spotlight, "intensity", 0, 4);
+    // folder.add(spotlight, "angle", 0, Math.PI / 2).name("Angle");
+    // folder.add(spotlight, "penumbra", 0, 1).name("Penumbra");
+    // folder.add(spotlight, "decay", 0, 2).name("Decay");
+    // folder.add(spotlight, "distance", 0, 100).name("Distance");
+    // folder.add(spotlight.position, "x", -50, 50);
+    // folder.add(spotlight.position, "y", -50, 50);
+    // folder.add(spotlight.position, "z", -50, 50);
+    // folder.add(spotlight.target.position, "x", -50, 50);
+    // folder.add(spotlight.target.position, "y", -50, 50);
+    // folder.add(spotlight.target.position, "z", -50, 50);
 
     return spotlight;
   }
@@ -94,11 +94,11 @@ export const setupLighting = (scene, paintings) => {
   statueSpotlight.penumbra = 1;
   statueSpotlight.distance = 0;
 
-  const statueSpotlightFolder = gui.addFolder("Statue Light");
-  statueSpotlightFolder.add(statueSpotlight, "intensity", 0, 4);
-  statueSpotlightFolder
-    .add(statueSpotlight, "angle", 0, Math.PI / 2)
-    .name("Angle");
-  statueSpotlightFolder.add(statueSpotlight, "penumbra", 0, 1).name("Penumbra");
-  statueSpotlightFolder.add(statueSpotlight, "decay", 0, 2).name("Decay");
+  // const statueSpotlightFolder = gui.addFolder("Statue Light");
+  // statueSpotlightFolder.add(statueSpotlight, "intensity", 0, 4);
+  // statueSpotlightFolder
+  //   .add(statueSpotlight, "angle", 0, Math.PI / 2)
+  //   .name("Angle");
+  // statueSpotlightFolder.add(statueSpotlight, "penumbra", 0, 1).name("Penumbra");
+  // statueSpotlightFolder.add(statueSpotlight, "decay", 0, 2).name("Decay");
 };
