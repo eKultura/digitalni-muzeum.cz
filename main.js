@@ -12,7 +12,7 @@ import { addObjectsToScene } from "./modules/sceneHelpers.js";
 import { setupPlayButton } from "./modules/menu.js";
 import { setupAudio } from "./modules/audioGuide.js";
 import { clickHandling } from "./modules/clickHandling.js";
-import { setupVR } from "./modules/VRSupport.js";
+// import { setupVR } from "./modules/VRSupport.js";
 import { loadStatueModel } from "./modules/statue.js";
 
 let { camera, controls, renderer } = setupScene();
@@ -41,4 +41,4 @@ setupRendering(scene, camera, renderer, paintings, controls, walls);
 
 loadStatueModel(scene);
 
-setupVR(renderer);
+// setupVR(renderer);
