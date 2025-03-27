@@ -7,7 +7,7 @@
     <title>3D Art Gallery</title>
 
         
-    <script type="module" crossorigin src="/assets/index-b24a02b0.js"></script>
+    <script type="module" crossorigin src="/assets/index-e7c886f3.js"></script>
     <link rel="stylesheet" href="/assets/index-1a93cc29.css">
   </head>
 
@@ -33,57 +33,31 @@
 
           <div id="play_button">
             <p>PROZKOUMAT UMĚNÍ</p>
-          </div>
-          <div id="about_button_container">
-            <button id="about_button">O GALERII</button>
-          </div>
+          </div>         
         </div>
       </div>
     </div>
 
-    <div id="about-overlay">
-      <button id="close-about">X</button>
-      <h1>About the 3D Art Gallery</h1>
-      <p>
-        Welcome to our virtual 3D Art Gallery. Here, you can navigate through a
-        variety of wonderful artworks and learn about their history and
-        significance.
-      </p>
-      <p>
-        This project is brought to you by Emilian Kasemi. We believe in the
-        power of art to inspire, provoke thought, and communicate across
-        cultures and epochs. Our mission is to make art accessible to everyone,
-        regardless of location or background.
-      </p>
-      <p>
-        Feel free to explore and engage with the artworks. The gallery is best
-        experienced in full-screen mode. For optimal navigation, use the arrow
-        keys or the W, A, S, and D keys. You can also use your mouse to change
-        the viewing direction. Additional information about the artworks will
-        appear on your screen as you approach them.
-      </p>
-    </div>
-
-    <div id="info-panel">
+    <div id="info-panel" class="collapsed">
       <div id="info-header">
-        <h3>Controls</h3>
-        <button id="toggle-info">Hide</button>
+        <h3>Ovládání</h3>
+        <button id="toggle-info">Otevřít</button>
       </div>
       <div id="info-content">
-        <p><b>W/A/S/D:</b> Move around</p>
-        <p><b>Mouse:</b> Look around</p>
-        <p><b>Space:</b> Toggle pointer lock</p>
-        <p><b>M:</b> Show Menu</p>
-        <p><b>Enter:</b> Start exploration</p>
-        <p><b>Esc:</b> Stop exploration</p>
-        <p><b>G:</b> Start audio guide</p>
-        <p><b>P:</b> Stop audio guide</p>
+        <p><b>W/A/S/D:</b> Pohyb v galerii</p>
+        <p><b>Myš:</b> Dívat se kolem</p>
+        <p><b>Mezerník:</b> Přepnout zamknutí myši</p>
+        <p><b>M:</b> Menu</p>
+        <p><b>Enter:</b> Začít prohlídku</p>
+        <p><b>Esc:</b> Skončit prohlídku</p>
+        <p><b>G:</b> Spustit audio</p>
+        <p><b>P:</b> Zastavit audio</p>
       </div>
     </div>
 
     <div id="audio_controls">
-      <button id="start_audio">Start Audio Guide</button>
-      <button id="stop_audio">Stop Audio Guide</button>
+      <button id="start_audio">Spustit audio</button>
+      <button id="stop_audio">Zastavit audio</button>
     </div>
 
     <div id="painting-info"></div>
