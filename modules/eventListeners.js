@@ -110,6 +110,6 @@ document.getElementById("toggle-info").addEventListener("click", () => {
   document.getElementById("toggle-info").innerText = document
     .getElementById("info-panel")
     .classList.contains("collapsed")
-    ? "Show"
-    : "Hide";
+    ? "Otevřít"
+    : "Skrýt";
 });
