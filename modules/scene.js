@@ -35,7 +35,7 @@ export const setupScene = () => {
     controls.dampingFactor = 0.05;
     controls.enableZoom = true;
     controls.enableRotate = true;
-    controls.enablePan = true;
+    controls.enablePan = false;
 
     const fixedPolarAngle = Math.PI / 2; // Looking straight horizontally
     controls.minPolarAngle = fixedPolarAngle;
