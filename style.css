@@ -55,6 +55,14 @@ canvas {
   border-radius: 0.9em;
   box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.6);
   overflow: hidden;
+
+  display: none;
+}
+
+@media (pointer: fine) {
+  #menu {
+    display: block; 
+  }
 }
 
 #menu .title {
@@ -229,6 +237,13 @@ canvas {
   transition: all 0.3s ease-in-out;
   transform: translateY(100px);
   opacity: 0;
+  display: none;
+}
+
+@media (pointer: fine) {
+  #painting-info {
+    display: block; 
+  }
 }
 
 #painting-info.show {
