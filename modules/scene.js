@@ -42,8 +42,8 @@ export const setupScene = () => {
     controls.maxPolarAngle = fixedPolarAngle;
   
     // Add horizontal boundaries if needed
-    controls.maxAzimuthAngle = Math.PI / 4; // Limit horizontal panning to 45 degrees
-    controls.minAzimuthAngle = -Math.PI / 4; // Limit horizontal panning to -45 degrees
+    controls.maxAzimuthAngle = Math.PI; // Limit horizontal panning to 45 degrees
+    controls.minAzimuthAngle = -Math.PI; // Limit horizontal panning to -45 degrees
     controls.maxDistance = 20; // Limit zoom out distance
     controls.minDistance = 5; // Limit zoom in distance
     
