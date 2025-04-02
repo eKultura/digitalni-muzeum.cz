@@ -37,7 +37,7 @@ export const setupScene = () => {
     controls.enableRotate = true;
     controls.enablePan = false;
 
-    const fixedPolarAngle = Math.PI / 2; // Looking straight horizontally
+    const fixedPolarAngle = Math.PI / 2.30; // Looking straight horizontally
     controls.minPolarAngle = fixedPolarAngle;
     controls.maxPolarAngle = fixedPolarAngle;
   

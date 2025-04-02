@@ -394,3 +394,14 @@ canvas {
 #audio_controls button:hover {
   background-color: rgba(52, 58, 125, 0.8);
 }
+
+@media (pointer: coarse) {
+  #audio_controls button {
+    padding: 12px 20px;    
+    margin: 30px 20px;    
+    font-size: 4rem; 
+    margin-bottom: 15px; 
+    min-width: 60px; 
+    min-height: 60px; 
+  }
+}
