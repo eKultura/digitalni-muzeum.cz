@@ -20,6 +20,7 @@ jobs:
         username: ${{ secrets.USER }}
         key: ${{ secrets.KEY }}
         script: |
+          export HOME=/home/laura
           cd /var/www/test.digitalni-muzeum.cz
           git pull origin main
           npm install
