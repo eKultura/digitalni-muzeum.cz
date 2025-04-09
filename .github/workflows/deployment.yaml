@@ -1,0 +1,26 @@
+name: Deploy Vite App
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v2   
+
+    - name: Deploy to EC2
+      uses: appleboy/ssh-action@v0.1.5
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USER }}
+        key: ${{ secrets.KEY }}
+        script: |
+          cd /var/www/test.digitalni-muzeum.cz
+          git pull origin main
+          npm install
+          npm run build
