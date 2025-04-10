@@ -19,8 +19,8 @@ jobs:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USER }}
         key: ${{ secrets.KEY }}
-        script: |
-          ssh -v laura@${{ secrets.HOST }} "echo 'SSH connection successful!'"          
+        debug: true
+        script: |                   
           cd /var/www/test.digitalni-muzeum.cz
           git pull origin main
           npm install
