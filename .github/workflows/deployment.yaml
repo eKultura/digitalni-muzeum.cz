@@ -20,7 +20,7 @@ jobs:
         username: ${{ secrets.USER }}
         key: ${{ secrets.KEY }}
         script: |
-          export HOME=/home/laura
+          ssh -v laura@${{ secrets.HOST }} "echo 'SSH connection successful!'"          
           cd /var/www/test.digitalni-muzeum.cz
           git pull origin main
           npm install
