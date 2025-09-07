@@ -52,8 +52,8 @@ kroniky Čech), vydané v Praze roku 1853, kde je imaginární „hrad“ označ
           // info about the painting
           title: `Citát Kosmu`,
           artist: 'Kosmas',
-          description: `???`,
-          year: `Rok ???`,
+          description: `Jeden z Kosmových výroků o lásce.`,
+          year: `Neznámý`,
           link: 'https://www.databazeknih.cz/citaty/kosmas-1181',
         }},
   // Back Wall  
@@ -66,8 +66,8 @@ kroniky Čech), vydané v Praze roku 1853, kde je imaginární „hrad“ označ
       // info about the painting
       title: `Citát Kosmu`,
       artist: 'Kosmas',
-      description: `???`,
-      year: `Rok ???`,
+      description: `Jeden z Kosmových výroků o lásce.`,
+      year: `Neznámý`,
       link: 'https://www.databazeknih.cz/citaty/kosmas-1181',
     }},
     {imgSrc: `artworks/6.webp`, 
@@ -79,8 +79,8 @@ kroniky Čech), vydané v Praze roku 1853, kde je imaginární „hrad“ označ
         // info about the painting
         title: `Praotec Čech na hoře Říp`,
         artist: ' Josef Mathauser',
-        description: `???`,
-        year: `Rok ???`,
+        description: `Obraz zachycuje legendární příchod praotce Čecha na horu Říp, inspirovaný Kronikou českou Václava Hájka z Libočan (1541). Ačkoli se jedná o mytický motiv, dílo odráží snahu 19. století posílit národní identitu prostřednictvím historických témat.`,
+        year: `Konec 19. století`,
         link: 'https://commons.wikimedia.org/wiki/File:Josef_Mathauser_-_Praotec_%C4%8Cech_na_ho%C5%99e_%C5%98%C3%ADp.jpg',
       }},
       {imgSrc: `artworks/7.webp`,
@@ -92,7 +92,7 @@ kroniky Čech), vydané v Praze roku 1853, kde je imaginární „hrad“ označ
           // info about the painting
           title: ` Přemysl Oráč, kterého přicházejí povolat na trůn`,
           artist: 'Umělá inteligence',
-          description: `Vygeneroval ChatGPT`,
+          description: `Vygeneroval ChatGPT. Obraz ztvárňuje legendární scénu z počátků českých dějin, kdy poslové kněžny Libuše přicházejí na pole povolat Přemysla Oráče, aby se stal knížetem.`,
           year: `Rok 2025`,
           link: '',
         }},
@@ -104,7 +104,7 @@ kroniky Čech), vydané v Praze roku 1853, kde je imaginární „hrad“ označ
           info: {
             // info about the painting
             title: `Budyšínský rukopis Kosmovy kroniky`,
-            artist: 'Neznamy',
+            artist: 'Neznámý',
             description: `Zdroj: Sdružený obrazový repozitář NK ČR`,
             year: `Rok 1853`,
             link: 'https://www.manuscriptorium.com/apps/index.php?direct=record&pid=AIPDIG-NMP___VIII_F_69___2NZEPX1-cs#search',
