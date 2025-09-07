@@ -67,21 +67,17 @@ canvas {
 
 #menu .title {
   padding: 1em;
-  background-color: rgba(52, 58, 125, 0.8);
-  color: #f2c641;
+  background-color: rgba(221, 221, 221, 0.8);
+  color: #414141;
   border-radius: 0.9em;
   position: relative;
   z-index: 2;  
 }
 
 
-#menu .title:hover {
-  transform: rotateX(0deg); /* reset the transformation on hover */
-}
-
 .title-info {
-  background-color: rgba(35, 37, 88, 0.8);
-  color: #f2c641;
+  background-color: rgba(221, 221, 221, 0.8);
+  color: #414141;
   padding: 1em;
   border-radius: 0.9em;
   width: 80%;
@@ -153,8 +149,8 @@ canvas {
 
 #menu #play_button {
   display: inline-block;
-  background-color: rgba(52, 58, 125, 0.8);
-  color: #f2c641;
+  background-color: rgba(221, 221, 221, 0.8);
+  color: #414141;
   border-radius: 0.9em;
   padding: 0.5em 1.5em;
   font-weight: bold;
@@ -164,7 +160,7 @@ canvas {
 }
 
 #menu #play_button:hover {
-  background-color: rgba(52, 58, 125);
+  background-color: rgba(221, 221, 221, 0.8);
   cursor: pointer;
   transform: scale(1.05);
 }
@@ -268,10 +264,10 @@ canvas {
   bottom: 10px;
   right: 10px;
   width: 200px;
-  background-color: rgba(35, 35, 190, 0.8);
+  background-color: rgba(221, 221, 221, 0.8);
   border-radius: 10px;
   padding: 10px;
-  color: white;
+  color: #414141;
   box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.6);
   overflow: hidden;
   transition: all 0.5s ease;
@@ -304,7 +300,7 @@ canvas {
   border-radius: 50%;
   padding: 5px;
   cursor: pointer;
-  color: #2323be;
+  color: #414141;
 }
 
 #info-content {
@@ -356,18 +352,18 @@ canvas {
 
 #about_button {
   display: inline-block;
-  background-color: rgba(52, 58, 125, 0.8);
-  color: #f2c641;
+  background-color: rgba(221, 221, 221, 0.8);
+  color: #414141;
   border-radius: 30px;
   padding: 0.5em 1.5em;
   font-weight: bold;
   margin: 0 auto; /* Centered the button */
   transition: all 0.4s;
-  border: 2px solid #2323be;
+  border: 2px solid #313131;
 }
 
 #about_button:hover {
-  background-color: rgba(52, 58, 125);
+  background-color: rgba(221, 221, 221, 0.8);
   cursor: pointer;
   transform: scale(1.05);
 }
@@ -381,8 +377,8 @@ canvas {
 
 #audio_controls button {
   display: block;
-  background-color: rgba(35, 37, 88, 0.8);
-  color: #f2c641;
+  background-color: rgba(221, 221, 221, 0.8);
+  color: #414141;
   border: none;
   border-radius: 10px;
   padding: 5px 10px;
@@ -392,7 +388,7 @@ canvas {
 }
 
 #audio_controls button:hover {
-  background-color: rgba(52, 58, 125, 0.8);
+  background-color: rgba(123, 123, 123, 0.8);
 }
 
 @media (pointer: coarse) {
